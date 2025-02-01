@@ -17,12 +17,14 @@ func expiryKey(_ expiryDate: String) -> Int {
     return 0
 }
 
-// MARK: - Radix Sort for Sorting by Expiry Date and PIN
-func radixSort(_ cards: inout [[String]]) {
-    cards.sort { 
+// MARK: - Sort Data by Expiry Date and PIN
+func sortByExpiryAndPin(_ data: [[String]]) -> [[String]] {
+    return data.sorted { 
         let key1 = expiryKey($0[1])
         let key2 = expiryKey($1[1])
-        return key1 != key2 ? key1 < key2 : ($0[2] < $1[2])
+        let pin1 = Int($0[3]) ?? 0
+        let pin2 = Int($1[3]) ?? 0
+        return key1 != key2 ? key1 < key2 : pin1 < pin2
     }
 }
 
@@ -37,9 +39,13 @@ func mergeData(first12: [[String]], last4: [[String]]) -> [[String]] {
     var mergedData = [[String]]()
     for (index, row) in first12.enumerated() {
         let fullCardNumber = row[0].dropLast(4) + last4[index][0].suffix(4)
-        mergedData.append([String(fullCardNumber), last4[index][1], last4[index][2]])
+        var mergedRow = [String(fullCardNumber)]
+        mergedRow.append(contentsOf: last4[index][1...])
+        mergedData.append(mergedRow)
     }
-    return mergedData
+    
+    // Sort the merged data by Expiry Date and PIN
+    return sortByExpiryAndPin(mergedData)
 }
 
 // MARK: - Write CSV to File
@@ -62,11 +68,11 @@ var firstPart = readCSV(filePath: "/Users/artemlisenkov/algo_proj/task_b/carddum
 var secondPart = readCSV(filePath: "/Users/artemlisenkov/algo_proj/task_b/carddumps/shuffled.csv")
 
 let sortStart = CFAbsoluteTimeGetCurrent()
-radixSort(&secondPart)
+let sortedSecondPart = sortByExpiryAndPin(secondPart)
 let sortEnd = CFAbsoluteTimeGetCurrent()
 
 let mergeStart = CFAbsoluteTimeGetCurrent()
-let mergedData = mergeData(first12: firstPart, last4: secondPart)
+var mergedData = mergeData(first12: firstPart, last4: sortedSecondPart)
 let mergeEnd = CFAbsoluteTimeGetCurrent()
 
 if !mergedData.isEmpty {
