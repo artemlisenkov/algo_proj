@@ -1,8 +1,7 @@
 import Foundation
 
-// Set your hardcoded path to the directory containing CSV files.
-// Example: "/Users/yourusername/Documents/CSVFiles"
-let hardcodedPath = "./arrays"
+// set hardcoded path to directory with CSV files
+let hardcodedPath = "arrays/"
 
 // MARK: - Sorting Algorithms
 
@@ -89,8 +88,9 @@ extension Double {
 
 // MARK: - CSV Loading
 
-/// Loads arrays from a CSV file using a hardcoded path.
-/// Each non-empty line in the CSV is considered an array, with elements separated by commas.
+// load arrays (csv files) using hardcoded path
+// all files arrays that non-empty - considered as arrays. Arrays by itself in csv files are separated by 
+// newlines and elements init - by commas
 func loadArraysFromCSV(fileName: String) -> [[Int]] {
     let fileURL = URL(fileURLWithPath: hardcodedPath).appendingPathComponent(fileName + ".csv")
     
@@ -114,16 +114,16 @@ func loadArraysFromCSV(fileName: String) -> [[Int]] {
 
 // MARK: - Sorting Test with Averaging
 
-/// Tests sorting algorithms on arrays loaded from a CSV file by running each sort five times and computing the average time.
-/// - Parameters:
-///   - fileName: Name of the CSV file (without extension).
-///   - categoryName: Category label for the arrays (e.g., "Random").
-///   - expectedSizes: Optional expected sizes for each array for validation.
+// testin algorithms. run each 5 times and output avg time
+/// - params:
+///   - fileName: name of the CSV file (without extension).
+///   - categoryName: category label for the arrays (e.g. "Random").
+///   - expectedSizes: optional expected sizes for each array for validation.
 func testSortFromCSV(fileName: String, categoryName: String, expectedSizes: [Int]? = nil) {
     let arrays = loadArraysFromCSV(fileName: fileName)
     print("\n--- \(categoryName) Arrays from \(fileName).csv ---")
     
-    // Number of iterations to average
+    // num of runnings (for avg)
     let iterations = 5
     
     for (index, originalArray) in arrays.enumerated() {
@@ -135,7 +135,7 @@ func testSortFromCSV(fileName: String, categoryName: String, expectedSizes: [Int
         
         print("\nArray Size: \(originalArray.count)")
         
-        // Bubble Sort Average Time
+        // bubble sort (avg of 5)
         var bubbleTotalTime: Double = 0
         for _ in 1...iterations {
             var arrayCopy = originalArray
@@ -147,7 +147,7 @@ func testSortFromCSV(fileName: String, categoryName: String, expectedSizes: [Int
         let bubbleAvg = bubbleTotalTime / Double(iterations)
         print("Bubble Sort Average Time: \(bubbleAvg.formatted()) seconds")
         
-        // Insertion Sort Average Time
+        // insertion sort (avg of 5)
         var insertionTotalTime: Double = 0
         for _ in 1...iterations {
             var arrayCopy = originalArray
@@ -159,7 +159,7 @@ func testSortFromCSV(fileName: String, categoryName: String, expectedSizes: [Int
         let insertionAvg = insertionTotalTime / Double(iterations)
         print("Insertion Sort Average Time: \(insertionAvg.formatted()) seconds")
         
-        // Merge Sort Average Time
+        // merge sort (avg of 5)
         var mergeTotalTime: Double = 0
         for _ in 1...iterations {
             let start = CFAbsoluteTimeGetCurrent()
@@ -170,7 +170,7 @@ func testSortFromCSV(fileName: String, categoryName: String, expectedSizes: [Int
         let mergeAvg = mergeTotalTime / Double(iterations)
         print("Merge Sort Average Time: \(mergeAvg.formatted()) seconds")
         
-        // Quick Sort Average Time
+        // quicksort (avg of 5)
         var quickTotalTime: Double = 0
         for _ in 1...iterations {
             var arrayCopy = originalArray
@@ -186,10 +186,10 @@ func testSortFromCSV(fileName: String, categoryName: String, expectedSizes: [Int
 
 // MARK: - Running Tests
 
-// Optional: Define expected sizes for each array
+// expected sizes of arrays (optional)
 let expectedSizes = [5, 15, 30, 50, 500, 5000]
 
-// Run tests for each CSV file. Ensure the CSV files (e.g., random.csv, sorted.csv, reverseSorted.csv) exist in the directory specified by hardcodedPath.
+// run test on each csv file (we have to be sure that file of "fileName" exists in hardcoded path (without csv extension))
 testSortFromCSV(fileName: "random_arrays", categoryName: "Random", expectedSizes: expectedSizes)
 testSortFromCSV(fileName: "sorted_arrays", categoryName: "Sorted", expectedSizes: expectedSizes)
 testSortFromCSV(fileName: "reverse_sorted_arrays", categoryName: "Reverse Sorted", expectedSizes: expectedSizes)

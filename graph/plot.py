@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 
-# --------------------------------------------------------------------------------
-# 1) RANDOM ARRAYS DATA
-# --------------------------------------------------------------------------------
+# 1. RANDOM ARRAYS DATA
 random_sizes = [5, 15, 30, 50, 500, 5000]
 
 bubble_random   = [0.000008, 0.000036, 0.000143, 0.000376, 0.035861, 3.412207]
@@ -22,7 +20,7 @@ plt.title('Sorting Performance - Random Arrays')
 plt.xscale('log')
 plt.yscale('log')
 
-# Simpler grid (major ticks only)
+# simple grid (only major dots will be shown)
 plt.grid(True, which='major', linestyle='-', linewidth=0.5, alpha=0.7)
 plt.minorticks_off()
 
@@ -30,9 +28,7 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
-# --------------------------------------------------------------------------------
-# 2) PRE-SORTED ARRAYS DATA
-# --------------------------------------------------------------------------------
+# 2. PRE-SORTED ARRAYS DATA
 sorted_sizes = [5, 15, 30, 50, 500, 5000]
 
 bubble_sorted   = [0.000006, 0.000032, 0.000109, 0.000283, 0.027329, 2.711896]
@@ -59,9 +55,7 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
-# --------------------------------------------------------------------------------
-# 3) REVERSE-SORTED ARRAYS DATA
-# --------------------------------------------------------------------------------
+# 3. REVERSE-SORTED ARRAYS DATA
 reverse_sizes = [5, 15, 30, 50, 500, 5000]
 
 bubble_reverse   = [0.000007, 0.000049, 0.000152, 0.000410, 0.039979, 4.021990]
