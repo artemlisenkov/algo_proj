@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -154,3 +154,4 @@ class Program
         Console.WriteLine($"{label}: {stopwatch.ElapsedMilliseconds} ms");
     }
 }
+
