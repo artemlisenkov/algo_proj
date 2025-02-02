@@ -1,4 +1,4 @@
-import Foundation // or import Darwin for memmove
+import Foundation
 
 class MyDynamicArray {
     private var capacity: Int
@@ -46,8 +46,8 @@ class MyDynamicArray {
         capacity = newCap
     }
 
-    // Optimized remove using memmove.
-    // Still O(n) in the worst case, but much faster than a manual loop.
+    // remove using memmove
+    // O(n) - worst case
     func remove(at i: Int) {
         precondition(i >= 0 && i < size)
         if i < size - 1 {
@@ -59,8 +59,8 @@ class MyDynamicArray {
         size -= 1
     }
 
-    // If you need to remove multiple consecutive elements at once,
-    // do a single memmove.
+    // to save mem if we need to remove multiple consecutive elements
+    // at once, its better to use singe memmove
     func removeRange(start: Int, length: Int) {
         precondition(start >= 0 && start + length <= size)
         if start + length < size {
@@ -79,7 +79,7 @@ class MyDynamicArray {
 
 // MARK: - Measurement Helpers
 
-/// Helper to measure the average time of multiple runs of a closure.
+/// helper func to measure time
 func measure(label: String, runs: Int, block: () -> Void) -> Double {
     var times = [Double]()
     for _ in 1...runs {
@@ -93,7 +93,7 @@ func measure(label: String, runs: Int, block: () -> Void) -> Double {
     return avg
 }
 
-/// Perform a test of appending "count" elements to MyDynamicArray.
+/// test MyDynamicArray appending
 func testMyDynamicArrayAppend(count: Int) {
     let myArr = MyDynamicArray()
     for i in 0..<count {
@@ -101,7 +101,7 @@ func testMyDynamicArrayAppend(count: Int) {
     }
 }
 
-/// Perform a test of appending "count" elements to Swift [Int].
+/// test Swift;s array appending
 func testSwiftArrayAppend(count: Int) {
     var swiftArr = [Int]()
     swiftArr.reserveCapacity(count) //this one is optional
@@ -110,31 +110,30 @@ func testSwiftArrayAppend(count: Int) {
     }
 }
 
-/// Perform a test of removing "removalCount" elements from MyDynamicArray.
+/// test MyDynamicArray removing
 func testMyDynamicArrayRemove(count: Int, removalCount: Int) {
     let myArr = MyDynamicArray()
-    // First, fill it up
+    // fill up
     for i in 0..<count {
         myArr.append(i)
     }
-    // Remove from random positions (or from the front, etc.)
+    // Remove from random pos (doesnt matter from where)
     for _ in 0..<removalCount {
-        let removeIndex = myArr.count / 2  // e.g., remove from the middle
+        let removeIndex = myArr.count / 2  // eg remove from mid
         myArr.remove(at: removeIndex)
     }
 }
 
-/// Perform a test of removing "removalCount" elements from Swift Array.
+/// test Swift's array removing
 func testSwiftArrayRemove(count: Int, removalCount: Int) {
     var swiftArr = [Int]()
     swiftArr.reserveCapacity(count)
-    // First, fill it up
+    // fill up again
     for i in 0..<count {
         swiftArr.append(i)
     }
-    // Remove from random positions (or from the front, etc.)
     for _ in 0..<removalCount {
-        let removeIndex = swiftArr.count / 2  // e.g., remove from the middle
+        let removeIndex = swiftArr.count / 2
         swiftArr.remove(at: removeIndex)
     }
 }

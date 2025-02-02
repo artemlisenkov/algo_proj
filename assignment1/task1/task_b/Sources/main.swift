@@ -44,7 +44,6 @@ func mergeData(first12: [[String]], last4: [[String]]) -> [[String]] {
         mergedData.append(mergedRow)
     }
     
-    // Sort the merged data by Expiry Date and PIN
     return sortByExpiryAndPin(mergedData)
 }
 

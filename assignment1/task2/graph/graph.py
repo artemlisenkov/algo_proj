@@ -35,7 +35,7 @@ remove_swift = [
     7.032287319501241        # 1m
 ]
 
-# === Create two subplots side by side (or change layout to your preference) ===
+# create 2subplots
 fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(12, 5))
 
 # plot 1: append performance
